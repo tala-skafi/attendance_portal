@@ -1,0 +1,40 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <input type="hidden" name="vacationDetailId" [value]="service.formData.vacationDetailId">
+
+  <div class="mb-3">
+    <label class="form-label">Type</label>
+    <select [(ngModel)]="service.formData.vacationType" class="form-select mb-3" aria-label="vacation select" name="vacationSelect" required>
+      <option *ngFor="let t of service.vacationTypes" [value]="t">{{t}}</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <div class="mb-3 col-6">
+      <label class="form-label">Vacation from date</label>
+      <input type="date" class="form-control" #vacationDateFrom="ngModel" name="vacationDateFrom"
+             [(ngModel)]="service.formData.vacationDateFrom" (change)="validateDates()" required>
+    </div>
+
+    <div class="mb-3 col-6">
+      <label class="form-label">Vacation to date</label>
+      <input type="date" class="form-control" #vacationDateTo="ngModel" name="vacationDateTo"
+             [(ngModel)]="service.formData.vacationDateTo" (change)="validateDates()" required>
+    </div>
+  </div>
+
+  <div *ngIf="dateError" class="text-danger">
+    The "to" date must be on or after the "from" date.
+  </div>
+
+  <div>
+    <label class="form-label">Reason</label>
+    <input type="text" class="form-control" #vacationReason="ngModel" name="vacationReason"
+           [(ngModel)]="service.formData.vacationReason" [ngModel]="service.formData.vacationReason" required
+           [ngClass]="{'is-invalid': form.submitted && (vacationReason.invalid || isOnlyWhitespace(vacationReason.value))}">
+    <div *ngIf="form.submitted && (vacationReason.invalid || isOnlyWhitespace(vacationReason.value))" class="text-danger">
+      Please provide a valid reason for the vacation. It cannot be empty or just whitespace.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3 btn-lg" [disabled]="dateError || vacationReason.invalid || isOnlyWhitespace(vacationReason.value)">Submit</button>
+</form>

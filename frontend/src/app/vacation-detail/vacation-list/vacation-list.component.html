@@ -1,0 +1,27 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Type</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Reason</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of service.list">
+    <td>{{ item.vacationType }}</td>
+    <td>{{ item.vacationDateFrom | date:'dd/MM/yyyy' }}</td>
+    <td>{{ item.vacationDateTo | date:'dd/MM/yyyy' }}</td>
+    <td>{{ item.vacationReason }}</td>
+    <td>
+        <span style="font-size:20px; cursor: pointer;" class="fa fa-trash text-danger"
+              (click)="onDelete(item.vacationDetailId)">
+        </span>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+

@@ -1,0 +1,13 @@
+
+
+.list-container {
+  flex: 1;
+  max-width: 80%;
+}
+
+
+.separator {
+  width: 1px; /* Very thin line */
+  height: 100%; /* Full height of the parent container */
+  margin: 0 20px; /* Adjust spacing between form and list */
+}
