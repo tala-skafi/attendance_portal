@@ -49,9 +49,6 @@ public class VacationDetailController {
     // PUT (Update) a vacation detail
     @PutMapping(ApplicationConstants.BY_ID)
     public ResponseEntity<VacationDetail> updateVacation(@PathVariable Long id, @RequestBody VacationDetail vacationDetail) {
-        if (vacationDetailService.getVacationById(id).isEmpty()) {
-            throw new VacationNotFoundException(id);
-        }
         VacationDetail updatedVacation = vacationDetailService.updateVacation(id, vacationDetail);
         return ResponseEntity.ok(updatedVacation);
     }
@@ -59,9 +56,6 @@ public class VacationDetailController {
     // DELETE a vacation detail
     @DeleteMapping(ApplicationConstants.BY_ID)
     public ResponseEntity<Void> deleteVacation(@PathVariable Long id) {
-        if (vacationDetailService.getVacationById(id).isEmpty()) {
-            throw new VacationNotFoundException(id);
-        }
         vacationDetailService.deleteVacation(id);
         return ResponseEntity.noContent().build();
     }

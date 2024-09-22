@@ -10,12 +10,8 @@ import java.util.Date;
 @Getter
 // put the same name as the table
 @Entity(name="vacation_detail")
-public class VacationDetail{
+public class VacationDetail extends BaseModel{
 
-    // Getters and Setters
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long vacationDetailId;  // Auto-increment
     private String vacationType;
     private Date vacationDateFrom;
     private Date vacationDateTo;
