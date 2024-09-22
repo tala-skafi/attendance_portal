@@ -9,13 +9,14 @@ import { NgForm } from "@angular/forms";
 })
 export class VacationFormComponent {
   dateError: boolean = false;
-  submitted: boolean = false; // Track submission state
+  submitted: boolean = false;
 
   constructor(public service: VacationDetailService) {}
 
   validateDates() {
-    const { vacationDateFrom, vacationDateTo } = this.service.formData;
-    this.dateError = vacationDateFrom && vacationDateTo && new Date(vacationDateFrom) > new Date(vacationDateTo);
+    const vacationDateFrom = this.service.formData.vacationDateFrom;
+    const vacationDateTo = this.service.formData.vacationDateTo;
+    this.dateError = !!(vacationDateFrom && vacationDateTo && new Date(vacationDateFrom) > new Date(vacationDateTo));
   }
 
   isOnlyWhitespace(value: string): boolean {
