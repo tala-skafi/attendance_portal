@@ -5,8 +5,11 @@ import com.attendancePortalBackend.exception.InvalidVacationDetailException; // 
 import com.attendancePortalBackend.model.VacationDetail;
 import com.attendancePortalBackend.repository.VacationDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +53,16 @@ public class VacationDetailService {
                 .orElseThrow(() -> new VacationNotFoundException(id)); // Throw exception if not found
         vacationDetail.setIsDeleted("1"); // Soft delete
         vacationDetailRepository.save(vacationDetail); // Save changes
+    }
+
+    @Scheduled(cron = "${cron-every-midnight}")
+    public void deleteAllVacations() {
+        List<VacationDetail> vacationDetails = getAllVacations();
+        // Soft delete each vacation
+        for (VacationDetail vacationDetail : vacationDetails) {
+            vacationDetail.setIsDeleted("1");
+        }
+        vacationDetailRepository.saveAll(vacationDetails);
     }
 
     // Validate the vacation detail fields

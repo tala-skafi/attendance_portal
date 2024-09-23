@@ -36,6 +36,7 @@ public class VacationDetailController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    
     // POST (Create) a new vacation detail
     @PostMapping
     public List<VacationDetail> createVacation(@RequestBody VacationDetail vacationDetail) {
