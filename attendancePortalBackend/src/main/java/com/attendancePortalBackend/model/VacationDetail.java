@@ -11,7 +11,6 @@ import java.util.Date;
 // put the same name as the table
 @Entity(name="vacation_detail")
 public class VacationDetail extends BaseModel{
-
     private String vacationType;
     private Date vacationDateFrom;
     private Date vacationDateTo;

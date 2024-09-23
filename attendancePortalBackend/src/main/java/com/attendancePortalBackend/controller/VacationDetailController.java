@@ -1,6 +1,7 @@
 package com.attendancePortalBackend.controller;
 
 import com.attendancePortalBackend.exception.VacationNotFoundException;
+import com.attendancePortalBackend.model.VacationType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import com.attendancePortalBackend.model.VacationDetail;
@@ -10,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.attendancePortalBackend.configuration.ApplicationConstants;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = ApplicationConstants.CROSS_ORIGIN)
@@ -28,6 +29,19 @@ public class VacationDetailController {
         return vacationDetailService.getAllVacations();
     }
 
+    // GET vacation types
+    @GetMapping("/vacation-types")  // Add this endpoint
+    public List<Map<String, Object>> getVacationTypes() {
+        return Arrays.stream(VacationType.values())
+                .map(type -> {
+                    Map<String, Object> map = new LinkedHashMap<>(); // Use LinkedHashMap
+                    map.put("type", type.name()); // Add type first
+                    map.put("requiresReason", type.isRequiresReason()); // Then add requiresReason
+                    return map;
+                })
+                .collect(Collectors.toList());
+    }
+
     // GET vacation by ID
     @GetMapping(ApplicationConstants.BY_ID)
     public ResponseEntity<VacationDetail> getVacationById(@PathVariable Long id) {
@@ -36,7 +50,7 @@ public class VacationDetailController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    
+
     // POST (Create) a new vacation detail
     @PostMapping
     public List<VacationDetail> createVacation(@RequestBody VacationDetail vacationDetail) {

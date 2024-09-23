@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +54,7 @@ public class VacationDetailService {
         vacationDetailRepository.save(vacationDetail); // Save changes
     }
 
-    @Scheduled(cron = "${cron-every-midnight}")
+    @Scheduled(cron = "${cron-every-year}")
     public void deleteAllVacations() {
         List<VacationDetail> vacationDetails = getAllVacations();
         // Soft delete each vacation
