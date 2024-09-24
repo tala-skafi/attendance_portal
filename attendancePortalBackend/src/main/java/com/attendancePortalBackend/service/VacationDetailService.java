@@ -54,15 +54,6 @@ public class VacationDetailService {
         vacationDetailRepository.save(vacationDetail); // Save changes
     }
 
-    @Scheduled(cron = "${cron-every-year}")
-    public void deleteAllVacations() {
-        List<VacationDetail> vacationDetails = getAllVacations();
-        // Soft delete each vacation
-        for (VacationDetail vacationDetail : vacationDetails) {
-            vacationDetail.setIsDeleted("1");
-        }
-        vacationDetailRepository.saveAll(vacationDetails);
-    }
 
     // Validate the vacation detail fields
     private void validateVacationDetail(VacationDetail vacationDetail) {

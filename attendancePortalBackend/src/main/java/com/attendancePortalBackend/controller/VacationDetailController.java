@@ -30,13 +30,13 @@ public class VacationDetailController {
     }
 
     // GET vacation types
-    @GetMapping("/vacation-types")  // Add this endpoint
+    @GetMapping(ApplicationConstants.VACATION_TYPES)  // Add this endpoint
     public List<Map<String, Object>> getVacationTypes() {
         return Arrays.stream(VacationType.values())
                 .map(type -> {
-                    Map<String, Object> map = new LinkedHashMap<>(); // Use LinkedHashMap
+                    Map<String, Object> map = new LinkedHashMap<>();
                     map.put("type", type.name()); // Add type first
-                    map.put("requiresReason", type.isRequiresReason()); // Then add requiresReason
+                    map.put("requiresReason", type.isRequiresReason());
                     return map;
                 })
                 .collect(Collectors.toList());
