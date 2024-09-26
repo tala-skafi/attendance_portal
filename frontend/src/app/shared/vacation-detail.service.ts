@@ -11,12 +11,21 @@ export class VacationDetailService {
   url: string = environment.apiUrl + '/vacations';
   list: VacationDetail[] = []
   formData: VacationDetail = new VacationDetail();
-  vacationTypes: string[] = ["Annual Vacation", "Death Vacation", "Sick Vacation", "Unpaid Vacation"];
+  vacationTypes: { type: string; requiresReason: boolean }[] = [];
 
-  // Variable to hold the selected option
   constructor(private http: HttpClient) {
-    this.formData.vacationType = this.vacationTypes[0]; // Default to "Annual Vacation"
   }
+
+  getVacationTypes() {
+    this.http.get<{ type: string; requiresReason: boolean }[]>(this.url + '/vacation-types')
+      .subscribe(types => {
+        types.forEach(t => {
+          t.type = t.type.replace('_', ' ');
+        });
+        this.vacationTypes = types;
+      });
+  }
+
 
   refreshList() {
     this.http.get(this.url).subscribe({
@@ -44,6 +53,7 @@ export class VacationDetailService {
   resetForm() {
     this.formData = new VacationDetail();
   }
+
   deleteVacationDetail(id: number) {
     return this.http.delete(this.url + '/' + id).subscribe({
       next: () => {

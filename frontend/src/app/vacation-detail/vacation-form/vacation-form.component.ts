@@ -1,17 +1,30 @@
-import { Component } from '@angular/core';
-import { VacationDetailService } from "../../shared/vacation-detail.service";
-import { NgForm } from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {VacationDetailService} from "../../shared/vacation-detail.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-vacation-form',
   templateUrl: './vacation-form.component.html',
   styleUrls: ['./vacation-form.component.css']
 })
-export class VacationFormComponent {
+export class VacationFormComponent implements OnInit {
   dateError: boolean = false;
   submitted: boolean = false;
+  requiresReason: boolean | undefined = false;
+  selectedVacationType: any;
 
-  constructor(public service: VacationDetailService) {}
+  constructor(public service: VacationDetailService) {
+  }
+
+  ngOnInit() {
+    this.service.getVacationTypes();
+  }
+
+  onVacationTypeChange() {
+    this.service.formData.vacationType = this.selectedVacationType?.type; // Assign string value
+    this.requiresReason = this.selectedVacationType?.requiresReason; // Update requiresReason
+  }
+
 
   validateDates() {
     const vacationDateFrom = this.service.formData.vacationDateFrom;
@@ -24,7 +37,7 @@ export class VacationFormComponent {
   }
 
   onSubmit(form: NgForm) {
-    this.submitted = true; // Track that the form has been submitted
+    this.submitted = true;
 
     // Prevent submission if there are validation errors
     if (this.dateError || form.invalid) {
@@ -33,6 +46,6 @@ export class VacationFormComponent {
 
     this.service.postVacationDetails();
     form.resetForm();
-    this.submitted = false; // Reset submission state if needed
+    this.submitted = false;
   }
 }
