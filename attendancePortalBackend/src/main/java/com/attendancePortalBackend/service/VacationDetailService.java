@@ -5,8 +5,6 @@ import com.attendancePortalBackend.exception.InvalidVacationDetailException; // 
 import com.attendancePortalBackend.model.VacationDetail;
 import com.attendancePortalBackend.repository.VacationDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,10 +18,7 @@ public class VacationDetailService {
 
     // Fetch vacation by ID, ensuring it's not deleted (isDeleted = '0')
     public Optional<VacationDetail> getVacationById(Long id) {
-        return vacationDetailRepository.findByIdAndIsDeleted(id, "0")
-                .or(() -> {
-                    throw new VacationNotFoundException(id); // Throw exception if not found
-                });
+        return vacationDetailRepository.findByIdAndIsDeleted(id, "0");
     }
 
     // Fetch all vacations that are not deleted

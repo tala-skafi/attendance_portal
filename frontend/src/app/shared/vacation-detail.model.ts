@@ -4,5 +4,4 @@ export class VacationDetail {
   vacationDateFrom: string = '';
   vacationDateTo: string = '';
   vacationReason: string = "";
-  isDeleted: string = "0";
 }

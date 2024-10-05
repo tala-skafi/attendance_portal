@@ -5,4 +5,5 @@ public interface ApplicationConstants {
     String URL = "/api/vacations";
     String BY_ID = "/{id}";
     String VACATION_TYPES = "/vacation-types";
+    String ALLOWED_ORIGINS = "http://localhost:4200";
 }
